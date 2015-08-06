@@ -1,0 +1,1 @@
+A ideia é fazer aparecer notícias como na televisão então na parte azul escuro mostraria as noticias uma por vez, na parte mais clara seria a fonte da noticia.Com o efeito de fadein e fadeout.
