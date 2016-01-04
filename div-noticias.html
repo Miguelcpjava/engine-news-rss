@@ -6,53 +6,94 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
 </script>
 <script>
-$(function () {
-         var urlRss = 'http://www.cidades.gov.br/ultimas-noticias?format=feed&type=rss';
-         var partes = urlRss.split(".");
-         var titulo = partes[1];
-         $("#txt-title").append(titulo.toUpperCase());
-         $.ajax({
-             type: "GET",
-             url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(urlRss),
-             dataType: 'json',
-             error: function (xhr) {
-                 var erro = xhr.responseText;
-                 alert('Erro ao ler o feed: ' + erro);
-             },
-             success: function (xml) {
-                 values = xml.responseData.feed.entries;
-                 for(var i = 0; i < values.length; i++) {
-                     var value = values[i];
-                     var li = $("<li class='link' style='list-style: none;'/> ");
-                     li.html(value.title + "<br />");
-                     $("#result").append(li);
-                     showNextQuote();
-                 }
-                 
-             }
-         });
-     });
 $(function() {
 
-          var quotes = $(".link");
-          var quoteIndex = -1;
+    var alternador = (function(el, delay) {
+        el = $(el);
+        var noticias = [];
+        var p = el.find('p');
+        var a = el.find('a');
 
-          function showNextQuote() {
-              ++quoteIndex;
-              quotes.eq(quoteIndex % quotes.length)
-                  .fadeIn(2000)
-                  .delay(2000)
-                  .fadeOut(2000, showNextQuote);
-          }
-                showNextQuote();
-          
+        var index = 0;
 
-      });
+        function mostrarProxima() {
+            el.fadeIn();
+            var value = noticias[index++];
+            a.html(value.title);
+            a.attr('href', value.link);
+            p.html(value.content); // <- caso queiras usar mais tarde
+            el.delay(2000).fadeOut();
+            if (index == noticias.length) index = 0;
+        }
+        setInterval(mostrarProxima, delay || 3000);
+        return function(_noticias) {
+            noticias = _noticias;
+        }
+    })('#result', 5000);
+
+    var urlRss = 'http://www.cidades.gov.br/ultimas-noticias?format=feed&type=rss';
+	var partes = urlRss.split(".");
+    var titulo = partes[1];
+	$("#fonte").append(titulo.toUpperCase());
+    $.ajax({
+        type: "GET",
+        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(urlRss),
+        dataType: 'json',
+        error: function(xhr) {
+            var erro = xhr.responseText;
+            alert('Erro ao ler o feed: ' + erro);
+        },
+        success: function(xml) {
+            values = xml.responseData.feed.entries;
+            alternador(values);
+        }
+    });
+});
 </script>
 <style type="text/css">
-#link{
-     display: none;
-     list-style: none;
+#result li {
+    list-style: none;
+}
+
+#result a {
+    text-decoration: none;
+    color: #fff;
+}
+
+#footer {
+    background-color: #224B9D;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    color: white;
+    font-weight: bold;
+    padding: 1em;
+    height: 4em;
+}
+
+#titulo {
+    background-color: #F95252;
+    color: white;
+    font-weight: bold;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    float: left;
+    text-align: center;
+}
+
+#header {
+    color: white;
+    font-weight: bold;
+    background-color: #7E9DBB;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+#header:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+#header > div {
+	padding: 1em;
 }
 </style>
 <!-- 
@@ -63,18 +104,22 @@ https://jsfiddle.net/71hhcjwx/2/
 -->
 </head>
 <body>
-	<div id="header" style=" color: white; font-weight: bold; background-color: #7E9DBB;border-top-left-radius: 6px;border-top-right-radius: 6px;" >
-		<div id="titulo" style="background-color: #F95252; color: white; font-weight: bold; border-top-left-radius: 6px;border-bottom-left-radius: 6px; padding: 20px; float: left;text-align: center;">
-			::Noticias::
-		</div>
-		<div style="padding: 2px;">
-			<label id="txt-title"></label>  
-		</div>
-	</div>
-	<div id="footer" style="background-color: #224B9D; border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; color: white; font-weight: bold; padding: 10px; float: none;">
-		<ul id="result">
+    <div id="header">
+        <div id="titulo">
+            ::Noticias::
+        </div>
+        <div id="fonte">
+            &nbsp
+        </div>
+		<div id="footer" ¨>
+        <ul id="result">
+            <li>
+                <a href=""></a>
+                <p></p>
+            </li>
+        </ul>
+    </div>
+    </div>
     
-			</ul>
-	</div>
 </body>
 </html>
