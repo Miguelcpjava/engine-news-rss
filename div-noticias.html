@@ -3,8 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Projeto engine-news-rss</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
 $(function() {
 
@@ -32,9 +31,6 @@ $(function() {
     })('#result', 5000);
 
     var urlRss = 'http://www.cidades.gov.br/ultimas-noticias?format=feed&type=rss';
-	var partes = urlRss.split(".");
-    var titulo = partes[1];
-	$("#fonte").append(titulo.toUpperCase());
     $.ajax({
         type: "GET",
         url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(urlRss),
@@ -48,6 +44,9 @@ $(function() {
             alternador(values);
         }
     });
+	var partes = urlRss.split(".");
+    var titulo = partes[1];
+	$("#fonte").append(titulo.toUpperCase());
 });
 </script>
 <style type="text/css">
