@@ -53,28 +53,31 @@ $(function() {
 <style type="text/css">
 #result li {
     list-style: none;
+    margin-top: -2em;
 }
-
 #result a {
     text-decoration: none;
     color: #fff;
+    font-weight: bold;
 }
-
+#result{
+     margin-top: 3em;
+     margin-left: 5em;
+     position: absolute;
+     vertical-align: middle;
+}
 #footer {
     background-color: #224B9D;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     color: white;
     font-weight: bold;
-    padding: 1em;
-    height: 4em;
 }
 
 #titulo {
     background-color: #F95252;
     color: white;
     font-weight: bold;
-    border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
     float: left;
     text-align: center;
@@ -87,39 +90,37 @@ $(function() {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
-#header:after {
+
+#footer:after {
   content: " ";
   display: block;
   clear: both;
 }
-#header > div {
+#footer > div {
 	padding: 1em;
 }
+#fonte{
+  padding: 0.25em;
+  height: 1em;
+}
 </style>
-<!-- 
-Testes
-https://jsfiddle.net/71hhcjwx/ 
-https://jsfiddle.net/71hhcjwx/1/ 
-https://jsfiddle.net/71hhcjwx/2/ 
--->
 </head>
 <body>
     <div id="header">
-        <div id="titulo">
-            ::Noticias::
-        </div>
         <div id="fonte">
-            &nbsp
+             &nbsp
         </div>
-		<div id="footer" ¨>
-        <ul id="result">
-            <li>
-                <a href=""></a>
-                <p></p>
-            </li>
-        </ul>
     </div>
+    <div id="footer" ¨>
+      <div id="titulo">
+            ::Noticias::
+      </div>
+      <ul id="result">
+        <li>
+            <a href=""></a>
+            <p></p>
+        </li>
+      </ul>
     </div>
-    
 </body>
 </html>
