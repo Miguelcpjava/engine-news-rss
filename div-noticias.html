@@ -30,10 +30,11 @@ $(function() {
         }
     })('#result', 5000);
 
-    var urlRss = 'http://www.cidades.gov.br/ultimas-noticias?format=feed&type=rss';
+    var urlRss = ['http://br.sputniknews.com/export/rss2/archive/index.xml','http://www.cidades.gov.br/ultimas-noticias?format=feed&type=rss','http://rss.uol.com.br/feed/noticias.xml','http://br.sputniknews.com/export/rss2/archive/index.xml'];
+	var numero = Math.floor(Math.random() * 4);
     $.ajax({
         type: "GET",
-        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(urlRss),
+        url: 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(urlRss[numero]),
         dataType: 'json',
         error: function(xhr) {
             var erro = xhr.responseText;
@@ -44,7 +45,7 @@ $(function() {
             alternador(values);
         }
     });
-	var partes = urlRss.split(".");
+	var partes = urlRss[numero].split(".");
     var titulo = partes[1];
 	$("#fonte").append(titulo.toUpperCase());
 });
